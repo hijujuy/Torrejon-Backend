@@ -8,12 +8,14 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
 
 class Sucursale extends Model
 {
     use HasFactory;
     use SoftDeletes;
     protected $fillable = [
+        "code",
         "nombre",
         "direccion",
         "telefono",
@@ -24,9 +26,9 @@ class Sucursale extends Model
         "provincia",
         "departamento",
         "localidad",
-        "state",
         "client_id",
-        "zona_id"
+        "zona_id",
+        "state"        
     ];
 
     public function setCreatedAtAttribute($value) {
@@ -45,5 +47,18 @@ class Sucursale extends Model
 
     public function client(){
         return $this->belongsTo(Client::class);
+    }
+
+    public function scopeFilterAdvance($query, $search, $zona_id){
+        if($search){
+            // Búsqueda múltiples campos
+            $query->where(DB::raw("CONCAT(IFNULL(sucursales.code,''),' ',IFNULL(sucursales.nombre,''))"),"like","%".$search."%");
+        }    
+        
+        if($zona_id){
+            $query->where("zona_id",$zona_id);
+        }
+
+        return $query;
     }
 }

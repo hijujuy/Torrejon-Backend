@@ -55,5 +55,7 @@ Route::group([
     Route::get('clients/config', [ClientController::class, 'config']);
     Route::resource('clients', ClientController::class);
 
+    Route::post('sucursales/index', [SucursaleController::class, 'index']);
+    Route::get('sucursales/config', [SucursaleController::class, 'config']);
     Route::resource('sucursales', SucursaleController::class);
 });

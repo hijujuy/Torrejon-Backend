@@ -4,21 +4,16 @@ namespace App\Http\Controllers\Client;
 
 use App\Classes\ApiResponseClass;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreClientRequest;
-use App\Http\Requests\UpdateClient;
-use App\Http\Requests\UpdateClientRequest;
+use App\Http\Requests\Client\StoreClientRequest;
+use App\Http\Requests\Client\UpdateClientRequest;
 use App\Http\Resources\Client\ClientCollection;
-use App\Http\Resources\Client\ClientResource;
 use App\Imports\ClientsImport;
 use App\Models\Client\Client;
 use App\Models\Configuration\ClientSegment;
 use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\ValidationException;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ClientController extends Controller
