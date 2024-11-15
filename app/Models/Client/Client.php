@@ -63,4 +63,16 @@ class Client extends Model
 
         return $query;
     }
+
+    public function scopeFilterSucursal($query, $code, $n_document, $surname){
+        if($code){
+            $query->where("code","like","%".$code."%");
+        }
+        if($n_document){
+            $query->where(DB::raw("CONCAT(IFNULL(clients.cuit,''),' ',IFNULL(clients.n_document,''))"),"like","%".$n_document."%");
+        }
+        if($surname){
+            $query->where("surname","like","%".$surname."%");
+        }
+    }
 }

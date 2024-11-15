@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Sucursale;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Sucursal\SucursalCollection;
+use App\Models\Client\Client;
 use App\Models\Configuration\Zona;
 use App\Models\Sucursale\Sucursale;
 use Illuminate\Http\Request;
@@ -32,6 +33,48 @@ class SucursaleController extends Controller
         return response()->json([
             "zonas" => $zonas
         ]);
+    }
+
+    public function search_clients(Request $request)
+    {
+        $code = $request->get("code");
+        $n_document = $request->get("n_document");
+        $surname = $request->get("surname");
+
+        $clients = Client::filterSucursal($code, $n_document, $surname)->where("state", 1)->orderBy("id","desc")->get();
+        return response()->json([
+            "clients" => $clients->map(function($client){
+                return[
+                    "id" => $client->id,
+                    "code" => $client->code,
+                    "n_document" => $client->n_document,
+                    "cuit" => $client->cuit,
+                    "surname" => $client->surname,
+                    "name" => $client->name,
+                    "razon_social" => $client->razon_social,
+                    "client_segment" => $client->client_segment
+                ];
+            })
+        ]);
+
+    }
+
+    public function search_zonas(Request $request)
+    {
+        $name = $request->get("name");
+
+        $zonas = Zona::where("name","like","%".$name."%")->where("state", 1)->orderBy("id","desc")->get();
+
+        return response()->json([
+            "zonas" => $zonas->map(function($zona){
+                return[
+                    "id" => $zona->id,
+                    "name" => $zona->name,
+                    "description" => $zona->description
+                ];
+            })
+        ]);
+
     }
 
     /**

@@ -57,5 +57,7 @@ Route::group([
 
     Route::post('sucursales/index', [SucursaleController::class, 'index']);
     Route::get('sucursales/config', [SucursaleController::class, 'config']);
+    Route::get('sucursales/search-clients', [SucursaleController::class, 'search_clients']);
+    Route::get('sucursales/search-zonas', [SucursaleController::class, 'search_zonas']);
     Route::resource('sucursales', SucursaleController::class);
 });
