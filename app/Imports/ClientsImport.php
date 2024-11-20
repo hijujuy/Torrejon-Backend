@@ -52,9 +52,9 @@ class ClientsImport implements ToModel, WithHeadingRow, WithValidation
                 $LOCALIDAD_SELECTED = $LOCALIDAD;
                 break;
             }
-        }
+        }        
 
-        return new Client([
+        return new Client([            
             "code" => $row["codigo"] ? $row["codigo"] : NULL,
             "surname" => $row["apellido"],
             "name" => $row["nombre"],
@@ -73,7 +73,7 @@ class ClientsImport implements ToModel, WithHeadingRow, WithValidation
             "ubigeo_localidad" => $LOCALIDAD_SELECTED ?  $LOCALIDAD_SELECTED["id"] : NULL,
             "provincia" => $row["provincia"],
             "departamento" => $row["departamento"],
-            "localidad" => $row["localidad"],
+            "localidad" => $row["localidad"]
         ]);
     }
 

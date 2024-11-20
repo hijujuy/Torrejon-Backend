@@ -50,7 +50,8 @@ class SucursaleController extends Controller
                     "n_document" => $client->n_document,
                     "cuit" => $client->cuit,
                     "surname" => $client->surname,
-                    "name" => $client->name,
+                    //"name" => $client->name,
+                    "nombre_completo" => $client->surname . ' ' . $client->name,
                     "razon_social" => $client->razon_social,
                     "client_segment" => $client->client_segment
                 ];
