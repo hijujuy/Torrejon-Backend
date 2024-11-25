@@ -3,11 +3,17 @@
 namespace App\Http\Controllers\Sucursale;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Client\UpdateClientRequest;
+use App\Http\Requests\Sucursal\StoreSucursalRequest;
+use App\Http\Requests\Sucursal\UpdateSucursalRequest;
 use App\Http\Resources\Sucursal\SucursalCollection;
 use App\Models\Client\Client;
 use App\Models\Configuration\Zona;
 use App\Models\Sucursale\Sucursale;
+use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class SucursaleController extends Controller
 {
@@ -81,9 +87,28 @@ class SucursaleController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreSucursalRequest $request)
     {
-        
+        try{        
+            DB::beginTransaction();    
+            Sucursale::create($request->all());
+            DB::commit();            
+        } catch(\Throwable $th) {
+            DB::rollBack();
+            Log::info($th);
+            $response=[
+                'success' => false,
+                'message' => $th->getMessage(),
+                'status' => 500
+            ];
+            throw new HttpResponseException(response()->json($response, 500));
+        }
+        $response=[
+            'success' => true,
+            'message' => 'Sucursal Creada Correctamente.',
+            'status' => 201
+        ];
+        return response()->json($response, 201);
     }
 
     /**
@@ -91,15 +116,38 @@ class SucursaleController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $sucursal = Sucursale::findOrFail($id);
+        return response()->json([
+            "sucursal" => $sucursal,            
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateSucursalRequest $request, string $id)
     {
-        
+        try{        
+            DB::beginTransaction();    
+            $sucursal = Sucursale::findOrFail($id);
+            $sucursal->update($request->all());
+            DB::commit();            
+        } catch(\Throwable $th) {
+            DB::rollBack();
+            Log::info($th);
+            $response=[
+                'success' => false,
+                'message' => $th->getMessage(),
+                'status' => 500
+            ];
+            throw new HttpResponseException(response()->json($response, 500));
+        }
+        $response=[
+            'success' => true,
+            'message' => 'Sucursal Actualizada Correctamente.',
+            'status' => 201
+        ];
+        return response()->json($response, 201);
     }
 
     /**

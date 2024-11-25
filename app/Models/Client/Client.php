@@ -72,7 +72,8 @@ class Client extends Model
             $query->where(DB::raw("CONCAT(IFNULL(clients.cuit,''),' ',IFNULL(clients.n_document,''))"),"like","%".$n_document."%");
         }
         if($surname){
-            $query->where("surname","like","%".$surname."%");
+            $query->where(DB::raw("CONCAT(IFNULL(clients.surname,''),' ',IFNULL(clients.razon_social,''))"),"like","%".$surname."%");
+            //$query->where("surname","like","%".$surname."%");
         }
     }
 }

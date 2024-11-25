@@ -19,6 +19,8 @@ class Sucursale extends Model
         "nombre",
         "direccion",
         "telefono",
+        "celular",
+        "email",
         "referencia",                
         "ubigeo_provincia",
         "ubigeo_departamento",
