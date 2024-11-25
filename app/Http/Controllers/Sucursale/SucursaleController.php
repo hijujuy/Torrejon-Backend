@@ -7,6 +7,7 @@ use App\Http\Requests\Client\UpdateClientRequest;
 use App\Http\Requests\Sucursal\StoreSucursalRequest;
 use App\Http\Requests\Sucursal\UpdateSucursalRequest;
 use App\Http\Resources\Sucursal\SucursalCollection;
+use App\Http\Resources\Sucursal\SucursalResource;
 use App\Models\Client\Client;
 use App\Models\Configuration\Zona;
 use App\Models\Sucursale\Sucursale;
@@ -117,9 +118,12 @@ class SucursaleController extends Controller
     public function show(string $id)
     {
         $sucursal = Sucursale::findOrFail($id);
-        return response()->json([
-            "sucursal" => $sucursal,            
+        return response()->json([            
+            "sucursal" => SucursalResource::make($sucursal),
         ]);
+        // return response()->json([
+        //     "sucursal" => $sucursal,       
+        // ]);
     }
 
     /**
