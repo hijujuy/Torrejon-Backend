@@ -2,6 +2,7 @@
 
 namespace App\Models\Client;
 
+use App\Models\Account\Account;
 use App\Models\Configuration\ClientSegment;
 use App\Models\User;
 use Carbon\Carbon;
@@ -75,5 +76,9 @@ class Client extends Model
             $query->where(DB::raw("CONCAT(IFNULL(clients.surname,''),' ',IFNULL(clients.razon_social,''))"),"like","%".$surname."%")->where("state",1);
             //$query->where("surname","like","%".$surname."%");
         }
+    }
+
+    public function accounts() {
+        return $this->morphMany(Account::class, 'accountable');
     }
 }

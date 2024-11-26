@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Account\AccountController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Client\ClientController;
 use App\Http\Controllers\Configuration\ClientSegmentController;
@@ -63,4 +64,5 @@ Route::group([
     Route::resource('sucursales', SucursaleController::class);
 
     Route::resource('providers', ProviderController::class);
+    Route::resource('accounts', AccountController::class);
 });
