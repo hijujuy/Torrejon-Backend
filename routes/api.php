@@ -5,6 +5,7 @@ use App\Http\Controllers\Client\ClientController;
 use App\Http\Controllers\Configuration\ClientSegmentController;
 use App\Http\Controllers\Configuration\EmployeeFunctionController;
 use App\Http\Controllers\Configuration\ZonaController;
+use App\Http\Controllers\Provider\ProviderController;
 use App\Http\Controllers\RolePermissionController;
 use App\Http\Controllers\Sucursale\SucursaleController;
 use App\Http\Controllers\UserAccessController;
@@ -60,4 +61,6 @@ Route::group([
     Route::get('sucursales/search-clients', [SucursaleController::class, 'search_clients']);
     Route::get('sucursales/search-zonas', [SucursaleController::class, 'search_zonas']);
     Route::resource('sucursales', SucursaleController::class);
+
+    Route::resource('providers', ProviderController::class);
 });

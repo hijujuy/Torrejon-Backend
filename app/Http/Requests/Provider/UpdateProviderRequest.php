@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Requests\Client;
+namespace App\Http\Requests\Provider;
 
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class StoreClientRequest extends FormRequest
+class UpdateProviderRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,13 +24,12 @@ class StoreClientRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'n_document' => 'nullable|unique:clients|min:7|max:8|regex:/^([0-9])*$/',
-            'email' => 'nullable|email|unique:clients',
-            'cuit' => 'nullable|unique:clients|min:11|max:11|regex:/^([0-9])*$/',
-            'code' => 'nullable|unique:clients|between:1,4',
-            'client_segment_id' => 'required|integer|exists:client_segments,id',
+            'n_document' => 'nullable|regex:/^([0-9])*$/|min:7|max:8|unique:providers,n_document,'.$this->route('provider'),
+            'email' => 'nullable|email|unique:providers,email,'.$this->route('provider'),
+            'cuit' => 'nullable|regex:/^([0-9])*$/|min:11|max:11|unique:providers,cuit,'.$this->route('provider'),
+            'code' => 'nullable|between:1,4|unique:providers,code,'.$this->route('provider'),            
             'state' => 'required|numeric'
-        ]; 
+        ];
     }
 
     public function failedValidation(Validator $validator)
@@ -57,9 +56,6 @@ class StoreClientRequest extends FormRequest
             'cuit.regex' => 'Ingrese sólo números',
             'code.unique' => 'Código ya existe',
             'code.between' => 'Código entre 1 a 4 caracteres',
-            'client_segment_id.required' => 'Tipo de cliente requerido',
-            'client_segment_id.integer' => 'Tipo de cliente, valor id no válido',
-            'client_segment_id.exists' => 'Tipo de cliente no existe',
             'state.required' => 'Estado requerido',
             'state.numeric' => 'Estado debe ser numérico',
         ]; 

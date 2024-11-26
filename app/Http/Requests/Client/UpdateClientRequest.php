@@ -26,9 +26,9 @@ class UpdateClientRequest extends FormRequest
         //dd($this->route('client'));
         //dd($this->all);
         return [            
-            'n_document' => 'nullable|min:7|max:8|unique:clients,n_document,'.$this->route('client'),
+            'n_document' => 'nullable|regex:/^([0-9])*$/|min:7|max:8|unique:clients,n_document,'.$this->route('client'),
             'email' => 'nullable|email|unique:clients,email,'.$this->route('client'),
-            'cuit' => 'nullable|min:13|max:13|unique:clients,cuit,'.$this->route('client'),
+            'cuit' => 'nullable|regex:/^([0-9])*$/|min:11|max:11|unique:clients,cuit,'.$this->route('client'),
             'code' => 'nullable|between:1,4|unique:clients,code,'.$this->route('client'),
             'client_segment_id' => 'required|integer|exists:client_segments,id',
             'state' => 'required|numeric'
@@ -50,11 +50,13 @@ class UpdateClientRequest extends FormRequest
             'n_document.unique' => 'Número documento ya existe',
             'n_document.min' => 'Número documento deber tener mínimo 7 dígitos',
             'n_document.max' => 'Número documento deber tener máximo 8 dígitos',
+            'n_document.regex' => 'Ingrese sólo números',
             'email.email' => 'Dirección de correo inválida',
             'email.unique' => 'Correo ya existe',
             'cuit.unique' => 'Cuit ya existe',
-            'cuit.min' => 'Cuit deber tener hasta 13 caracteres',
-            'cuit.max' => 'Cuit deber tener hasta 13 caracteres',
+            'cuit.min' => 'Cuit deber tener hasta 11 caracteres',
+            'cuit.max' => 'Cuit deber tener hasta 11 caracteres',
+            'cuit.regex' => 'Ingrese sólo números',
             'code.unique' => 'Código ya existe',
             'code.between' => 'Código entre 1 a 4 caracteres',
             'client_segment_id.required' => 'Tipo de cliente requerido',
