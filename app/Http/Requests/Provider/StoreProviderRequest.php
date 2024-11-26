@@ -27,7 +27,7 @@ class StoreProviderRequest extends FormRequest
             'n_document' => 'nullable|unique:providers|min:7|max:8|regex:/^([0-9])*$/',
             'email' => 'nullable|email|unique:providers',
             'cuit' => 'nullable|unique:providers|min:11|max:11|regex:/^([0-9])*$/',
-            'code' => 'nullable|unique:providers|between:1,4',            
+            'code' => 'required|unique:providers|between:1,4',            
             'state' => 'required|numeric'
         ];
     }
@@ -55,7 +55,8 @@ class StoreProviderRequest extends FormRequest
             'cuit.max' => 'Cuit deber tener hasta 11 caracteres',
             'cuit.regex' => 'Ingrese sólo números',
             'code.unique' => 'Código ya existe',
-            'code.between' => 'Código entre 1 a 4 caracteres',            
+            'code.between' => 'Código entre 1 a 4 caracteres',
+            'code.required' => 'Codigo requerido',
             'state.required' => 'Estado requerido',
             'state.numeric' => 'Estado debe ser numérico',
         ]; 

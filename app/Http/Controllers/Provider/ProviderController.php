@@ -22,7 +22,7 @@ class ProviderController extends Controller
 
         return response()->json([
             "total" => $providers->total(),
-            //"providers" => ProviderCollection::make($providers),
+            "providers" => ProviderCollection::make($providers),
         ]);
     }
 

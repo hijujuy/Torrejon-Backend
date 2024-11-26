@@ -27,7 +27,7 @@ class UpdateProviderRequest extends FormRequest
             'n_document' => 'nullable|regex:/^([0-9])*$/|min:7|max:8|unique:providers,n_document,'.$this->route('provider'),
             'email' => 'nullable|email|unique:providers,email,'.$this->route('provider'),
             'cuit' => 'nullable|regex:/^([0-9])*$/|min:11|max:11|unique:providers,cuit,'.$this->route('provider'),
-            'code' => 'nullable|between:1,4|unique:providers,code,'.$this->route('provider'),            
+            'code' => 'required|between:1,4|unique:providers,code,'.$this->route('provider'),            
             'state' => 'required|numeric'
         ];
     }
@@ -56,6 +56,7 @@ class UpdateProviderRequest extends FormRequest
             'cuit.regex' => 'Ingrese sólo números',
             'code.unique' => 'Código ya existe',
             'code.between' => 'Código entre 1 a 4 caracteres',
+            'code.required' => 'Codigo requerido',
             'state.required' => 'Estado requerido',
             'state.numeric' => 'Estado debe ser numérico',
         ]; 
