@@ -4,6 +4,7 @@ namespace App\Models\Account;
 
 use App\Http\Requests\Account\StoreRequest;
 use App\Models\Client\Client;
+use App\Models\Provider\Provider;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -54,13 +55,15 @@ class Account extends Model
                 $owner = Client::findOrFail($request->accountable_id);
                 break;
             case 'provider':
-                //$owner = Provider::findOrFail($request->owner_id);
+                $owner = Provider::findOrFail($request->accountable_id);
                 break;                
         }
 
         $account = Account::create($request->all());
 
         $owner->accounts()->save($account);
+
+        return $account;
 
     }
 }

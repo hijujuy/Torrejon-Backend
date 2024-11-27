@@ -60,7 +60,7 @@ class AccountController extends Controller
 
         try{        
             
-            Account::createModel($request);
+            $account = Account::createModel($request);
             
             DB::commit();
 
@@ -82,7 +82,8 @@ class AccountController extends Controller
         $response=[
             'success' => true,
             'message' => 'Cuenta bancaria creada correctamente.',
-            'status' => 201
+            'status' => 201,
+            'account' => $account
         ];
 
         return response()->json($response, 201);

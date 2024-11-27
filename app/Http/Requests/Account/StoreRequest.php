@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Account;
 
+use App\Rules\IdExistsInTables;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -29,11 +30,11 @@ class StoreRequest extends FormRequest
             'alias'     => 'required|string|max:255|unique:accounts',
             'ubc'       => 'required|string|numeric|digits:22|unique:accounts',
             'number'    => 'required|string|numeric|min_digits:8|max_digits:12|unique:accounts',
-            'accountable_type'=> 'required|in:client, provider',
+            'accountable_type'=> 'required|in:client,provider',
             'accountable_id'  => [
                 'required',
                 'integer',
-                'exists:clients,id',
+                new IdExistsInTables(),
             ],            
         ]; 
     }
@@ -54,7 +55,7 @@ class StoreRequest extends FormRequest
             'accountable_type.in'         => 'El tipo de titular no es valido.',
             'accountable_id.required'     => 'El titular de la cuenta es un campo obligatorio.',
             'accountable_id.integer'      => 'El titular de la cuenta no es valido.',
-            'accountable_id.exists'       => 'El titular de la cuenta no se encuentra registrado.',
+            //'accountable_id.exists'       => 'El titular de la cuenta no se encuentra registrado.',
         ]; 
     }
 }
