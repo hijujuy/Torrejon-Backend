@@ -3,6 +3,7 @@
 use App\Http\Controllers\Account\AccountController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Client\ClientController;
+use App\Http\Controllers\Configuration\BankController;
 use App\Http\Controllers\Configuration\ClientSegmentController;
 use App\Http\Controllers\Configuration\EmployeeFunctionController;
 use App\Http\Controllers\Configuration\ZonaController;
@@ -64,5 +65,8 @@ Route::group([
     Route::resource('sucursales', SucursaleController::class);
 
     Route::resource('providers', ProviderController::class);
+    
+    Route::post('accounts/filter', [AccountController::class, 'get_accounts']);
     Route::resource('accounts', AccountController::class);
+    Route::resource('banks', BankController::class);
 });

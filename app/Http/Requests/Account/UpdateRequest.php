@@ -24,11 +24,11 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'          => 'string|max:255',
-            'bank'          => 'string|max:255',
-            'alias'         => 'string|max:255|unique:accounts,alias,'.$this->account->id,
-            'ubc'           => 'string|numeric|digits:22|unique:accounts,ubc,'.$this->account->id,
-            'number'        => 'string|numeric|min_digits:8|max_digits:12|unique:accounts,number,'.$this->account->id,
+            'name'          => 'required|string|max:255',
+            'bank'          => 'required|string|max:255',
+            'alias'         => 'required|string|max:255|unique:accounts,alias,'.$this->account->id,
+            'ubc'           => 'required|string|numeric|digits:22|unique:accounts,ubc,'.$this->account->id,
+            'number'        => 'required|string|numeric|min_digits:8|max_digits:12|unique:accounts,number,'.$this->account->id,
             'accountable_type'=> 'in:client, provider',
             'accountable_id'  => [
                 'integer',

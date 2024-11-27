@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Account\StoreRequest;
 use App\Http\Requests\Account\UpdateRequest;
 use App\Models\Account\Account;
+use App\Models\Client\Client;
+use App\Models\Provider\Provider;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -99,6 +101,24 @@ class AccountController extends Controller
     }
 
     /**
+     * Display the accounts of a client or a provider.
+     */
+    public function get_accounts(Request $request)
+    {   
+        if ($request->accountable_type == "client") {
+            $accountable = Client::find($request->accountable_id);
+        }
+        elseif ($request->accountable_type == "provider") {
+            $accountable = Provider::find($request->accountable_id);
+        }
+
+        return response()->json([
+            'accountable' => $accountable,            
+            'accounts' => $accountable->accounts
+        ]);
+    }
+
+    /**
      * Update the specified resource in storage.
      */
     public function update(UpdateRequest $request, Account $account)
@@ -108,9 +128,10 @@ class AccountController extends Controller
         $account->update($request->all());
 
         $response=[
-            'success' => true,
-            'message' => 'Cuenta bancaria acualizada correctamente.',
-            'status' => 200
+            'success'   => true,
+            'message'   => 'Cuenta bancaria acualizada correctamente.',
+            'status'    => 200,
+            'account'   => $account
         ];
 
         return response()->json($response, 200);
@@ -128,7 +149,8 @@ class AccountController extends Controller
         return response()->json([
             'success'   => true,
             'message'   => 'Cuenta bancaria eliminada correctamente',
-            'status'    => 200
+            'status'    => 200,
+            'account'   => $account
         ]);
     }
 }

@@ -24,11 +24,11 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'      => 'nullable|string|max:255',
-            'bank'      => 'nullable|string|max:255',
-            'alias'     => 'nullable|string|max:255|unique:accounts',
-            'ubc'       => 'nullable|string|numeric|digits:22|unique:accounts',
-            'number'    => 'nullable|string|numeric|min_digits:8|max_digits:12|unique:accounts',
+            'name'      => 'required|string|max:255',
+            'bank'      => 'required|string|max:255',
+            'alias'     => 'required|string|max:255|unique:accounts',
+            'ubc'       => 'required|string|numeric|digits:22|unique:accounts',
+            'number'    => 'required|string|numeric|min_digits:8|max_digits:12|unique:accounts',
             'accountable_type'=> 'required|in:client, provider',
             'accountable_id'  => [
                 'required',
